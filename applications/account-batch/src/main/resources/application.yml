@@ -1,6 +1,14 @@
 db:
   schema: cache_accounts
 batch:
+  jdbc:
+    url: "jdbc:postgresql://34.171.65.113:5432/postgres-db"
+    username: "pgappuser"
+    password: sRlI24ZRQ0rtFs9R3i4IEhk1gM634u
+  job:
+    repository:
+      create: true
+
   read:
     sql: "select * from ${db.schema}.account"
     fetch:
@@ -8,13 +16,24 @@ batch:
     chunk:
       size: 20000
 spring:
+  datasource:
+    url: "jdbc:postgresql://34.171.65.113:5432/postgres-db"
+    username: "pgappuser"
+    platform: postgres
+    password: sRlI24ZRQ0rtFs9R3i4IEhk1gM634u
   application:
     name: account-batch
   data:
     gemfire:
       pool.default.locators: localhost[10334]
+  sql:
+    init:
+      platform: postgres
   liquibase:
     # Required running: CREATE SCHEMA IF NOT EXISTS retail;
     default-schema: ${db.schema}
     liquibase-schema: ${db.schema}
     change-log: "classpath:db/changelog/postgres/changelog-v1.sql"
+    url: "jdbc:postgresql://34.171.65.113:5432/postgres-db"
+    user: "pgappuser"
+    password: sRlI24ZRQ0rtFs9R3i4IEhk1gM634u

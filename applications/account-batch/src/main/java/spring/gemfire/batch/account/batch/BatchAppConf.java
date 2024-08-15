@@ -27,7 +27,6 @@ import org.springframework.data.gemfire.GemfireTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import spring.gemfire.showcase.account.domain.account.Account;
 
 import java.util.Map;
 import java.util.UUID;

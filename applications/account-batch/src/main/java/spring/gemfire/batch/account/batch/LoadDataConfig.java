@@ -6,6 +6,7 @@ import nyla.solutions.core.util.Text;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -40,11 +41,26 @@ public class LoadDataConfig {
     @Value("${account.data.prefix:LLC}")
     private String accountNamePrefix;
 
+    @Value("${batch.jdbc.url}")
+    private String batchJdbcUrl;
+
+    @Value("${batch.jdbc.username}")
+    private String batchUsername;
+
+
+    @Value("${batch.jdbc.password:''}")
+    private String batchPassword;
+
     @ConditionalOnProperty( name= "batch.load.accounts", havingValue = "true")
     @Order(9)
     @Bean
     CommandLineRunner loadData(DataSource dataSource)
     {
+        var dataSource1 = DataSourceBuilder.create().
+                url(batchJdbcUrl).username(batchUsername)
+                .password(batchPassword).build();
+        log.info("Connecting to DB " + batchJdbcUrl);
+
         var map = Map.of("schemaName",schemaName);
         insertSql = Text.format(insertSql,map);
         deleteSql  = Text.format(deleteSql,map);
@@ -52,13 +68,13 @@ public class LoadDataConfig {
         var fullNameCreator = new FullNameCreator();
 
         return args -> {
-            log.info("Inserting accounts {}",insertSql);
 
-            try (var conn = dataSource.getConnection();
+            try (var conn = dataSource1.getConnection();
                  var statement = conn.prepareStatement(insertSql); var deleteStatement = conn.createStatement()) {
 
                 log.info("Delete account data SQL: {}",deleteSql);
                 deleteStatement.execute(deleteSql);
+                log.info("Inserting accounts {}",insertSql);
 
                 for (int i = 0; i < accountCount; i++) {
                     statement.setString(1, valueOf(i));
@@ -76,7 +92,7 @@ public class LoadDataConfig {
                 statement.executeBatch();
 
             } catch (SQLException e) {
-                log.warn("Cannot records",e);
+                log.warn("Cannot insert records",e);
             }
         };
     }

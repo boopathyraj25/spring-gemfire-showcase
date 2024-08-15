@@ -8,9 +8,11 @@
 package spring.gemfire.batch.account.batch;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -25,6 +27,17 @@ import java.sql.SQLException;
 @EnableJpaRepositories
 @EnableTransactionManagement
 public class JobRepositoryConfig implements BeanPostProcessor {
+
+    @Value("${batch.jdbc.url}")
+    private String batchJdbcUrl;
+
+    @Value("${batch.jdbc.username}")
+    private String batchUsername;
+
+
+    @Value("${batch.jdbc.password:''}")
+    private String batchPassword;
+
 
     private String jobRepositorySql = """
                         
@@ -127,9 +140,13 @@ public class JobRepositoryConfig implements BeanPostProcessor {
     @Bean
     CommandLineRunner setupJobRepository(DataSource dataSource)
     {
+        var dataSource1 = DataSourceBuilder.create().
+                url(batchJdbcUrl).username(batchUsername)
+                .password(batchPassword).build();
+        log.info("Connecting to DB " + batchJdbcUrl);
         return args -> {
 
-            try (var conn = dataSource.getConnection();
+            try (var conn = dataSource1.getConnection();
                  var statement = conn.createStatement()) {
                 log.info("CREATING jobs repository with DDL {}",jobRepositorySql);
                 statement.execute(jobRepositorySql);

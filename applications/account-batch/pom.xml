@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>spring.gemfire.batch</groupId>
 	<artifactId>account-batch</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<name>account-batch</name>
 	<description>account-batch</description>
 	<properties>
@@ -21,11 +21,7 @@
 		<testcontainers.version>1.19.3</testcontainers.version>
 	</properties>
 	<dependencies>
-		<dependency>
-			<groupId>com.github.ggreen</groupId>
-			<artifactId>account-domain</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+
 		<dependency>
 			<groupId>com.vmware.gemfire</groupId>
 			<artifactId>spring-boot-3.0-gemfire-10.0</artifactId>
@@ -82,6 +78,14 @@
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
+		<dependency>
+			<groupId>org.mariadb.jdbc</groupId>
+			<artifactId>mariadb-java-client</artifactId>
+			<version>3.4.1</version>
+			<scope>runtime</scope>
+		</dependency>
+
 
 	</dependencies>
 	<dependencyManagement>
@@ -110,6 +114,11 @@
 			<name>Pivotal GemFire Release Repository</name>
 			<url>https://commercial-repo.pivotal.io/data3/gemfire-release-repo/gemfire</url>
 		</repository>
+		<!--<repository>
+			<id>gemfire-release-repo</id>
+			<name>Broadcom GemFire Release Repository</name>
+			<url>https://packages.broadcom.com/artifactory/gemfire/</url>
+		</repository>-->
 	</repositories>
 
 </project>

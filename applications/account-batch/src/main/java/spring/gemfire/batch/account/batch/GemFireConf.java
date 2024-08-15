@@ -9,7 +9,6 @@ import org.springframework.data.gemfire.config.annotation.ClientCacheApplication
 import org.springframework.data.gemfire.config.annotation.EnablePdx;
 import org.springframework.data.gemfire.config.annotation.EnableSecurity;
 import org.springframework.data.gemfire.repository.config.EnableGemfireRepositories;
-import spring.gemfire.showcase.account.domain.account.Account;
 
 @ClientCacheApplication
 @EnableSecurity
