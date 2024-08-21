@@ -13,6 +13,15 @@ spring:
         bindings:
           accountConsumer-in-0: input
           accountConsumer-out-0: output
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
       #
 #      default:
 #        contentType: "application/json"
