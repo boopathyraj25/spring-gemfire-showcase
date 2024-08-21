@@ -37,3 +37,11 @@ spring:
     url: "jdbc:postgresql://34.171.65.113:5432/postgres-db"
     user: "pgappuser"
     password: sRlI24ZRQ0rtFs9R3i4IEhk1gM634u
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}

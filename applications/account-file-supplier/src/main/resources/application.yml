@@ -8,6 +8,17 @@ spring:
   config:
     import: "optional:configserver:http://localhost:8888/"
   cloud:
+    skipper:
+      server:
+        platform:
+          kubernetes:
+            accounts:
+              default:
+                podSecurityContext:
+                  runAsUser: 0
+                containerSecurityContext:
+                  allowPrivilegeEscalation: true
+                  runAsUser: 0
     function:
       definition: fileSupplier
     stream:
@@ -20,7 +31,7 @@ spring:
         contentType: "application/json"
       bindings:
         output:
-          destination: "account-file"
+          destination: "account-file" #//exchange name
       rabbit:
         default:
           group: ${spring.application.name}
@@ -36,4 +47,12 @@ spring:
               quorum.enabled: true
               dlqQuorum:
                 enabled: true
-              prefetch: 10000
+              prefetch:
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}

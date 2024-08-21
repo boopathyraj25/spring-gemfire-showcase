@@ -29,8 +29,8 @@ public class RabbitConfig {
     @Value("${spring.rabbitmq.password:guest}")
     private String password   = "guest";
 
-    @Value("${spring.rabbitmq.host:127.0.0.1}")
-    private String hostname = "localhost";
+    @Value("${spring.rabbitmq.host:34.121.19.122}")
+    private String hostname = "34.121.19.122";
 
     @Bean
     ConnectionNameStrategy connectionNameStrategy(){

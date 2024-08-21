@@ -2,7 +2,6 @@ package spring.gemfire.showcase.account.csv.functions;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import spring.gemfire.showcase.account.domain.account.Account;
 
 import java.util.List;
 import java.util.function.Function;

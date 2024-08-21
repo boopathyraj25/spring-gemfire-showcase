@@ -27,6 +27,7 @@ import org.springframework.data.gemfire.GemfireTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import spring.gemfire.showcase.account.domain.account.Account;
 
 import java.util.Map;
 import java.util.UUID;
@@ -87,7 +88,7 @@ public class BatchAppConf {
         url(batchJdbcUrl).username(batchUsername)
                 .password(batchPassword).build();
 
-        RowMapper<Account> rowMapper = (rs,i) ->   Account.builder()
+        RowMapper<Account> rowMapper = (rs, i) ->   Account.builder()
                     .id(rs.getString(1))
                     .name(rs.getString(2))
                     .build();

@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>spring.gemfire.batch</groupId>
 	<artifactId>account-batch</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>account-batch</name>
 	<description>account-batch</description>
 	<properties>
@@ -21,7 +21,20 @@
 		<testcontainers.version>1.19.3</testcontainers.version>
 	</properties>
 	<dependencies>
-
+		<dependency>
+			<groupId>com.github.ggreen</groupId>
+			<artifactId>account-domain</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.micrometer.prometheus</groupId>
+			<artifactId>prometheus-rsocket-spring</artifactId>
+			<version>1.5.3</version>
+		</dependency>
 		<dependency>
 			<groupId>com.vmware.gemfire</groupId>
 			<artifactId>spring-boot-3.0-gemfire-10.0</artifactId>
@@ -109,16 +122,16 @@
 		</plugins>
 	</build>
 	<repositories>
-		<repository>
+		<!--<repository>
 			<id>gemfire-release-repo</id>
 			<name>Pivotal GemFire Release Repository</name>
 			<url>https://commercial-repo.pivotal.io/data3/gemfire-release-repo/gemfire</url>
-		</repository>
-		<!--<repository>
+		</repository>-->
+		<repository>
 			<id>gemfire-release-repo</id>
 			<name>Broadcom GemFire Release Repository</name>
 			<url>https://packages.broadcom.com/artifactory/gemfire/</url>
-		</repository>-->
+		</repository>
 	</repositories>
 
 </project>
