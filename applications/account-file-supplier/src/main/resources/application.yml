@@ -47,7 +47,7 @@ spring:
               quorum.enabled: true
               dlqQuorum:
                 enabled: true
-              prefetch:
+              prefetch: 100
 management:
   endpoints:
     web:
